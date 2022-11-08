@@ -4,7 +4,7 @@ import cv2, logging
 import numpy as np
 from inference import predict_one
 
-logging.getlogging('utils').setLevel(logging.INFO)
+logging.getLogger('utils').setLevel(logging.INFO)
 
 def order_points(pts):
 	"""
