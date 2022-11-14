@@ -69,7 +69,7 @@ def four_point_transform(image, pts):
 	# return the warped image
 	return warped
 
-def getROI(image_path, model, color=1):
+def getROI(image_path, model, size=(1024, 1024), color=1):
   """
   Takes an image, performs segmentation and crops out the ROI from the image
 
@@ -77,15 +77,16 @@ def getROI(image_path, model, color=1):
   Path to an image
   semantic segmentation model
   color flag - 1 (leave default colour configuration), otherwise change to RGB
+  size - size of the output image
 
   Output:
   Cropped image (ndarray)
   """
   img = cv2.imread(image_path)
-  img = cv2.resize(img, (1024, 1024), interpolation=cv2.INTER_AREA)
+  img = cv2.resize(img, size, interpolation=cv2.INTER_AREA)
   if color != 1:
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-  ratio = img.shape[0]/256 # essentially 1024/256 = 4
+  ratio = img.shape[0]/256 
 
   mask = predict_one(image_path, model)
   mask = (mask * 255.0).astype('uint8')
